@@ -1,0 +1,91 @@
+
+.ractive-multiselect
+
+    display flex
+    display inline-flex
+    flex-wrap wrap
+
+    cursor default
+    user-multiselect none
+    line-height 1
+    padding 0.2em
+
+    background #fff
+    border 1px solid #999
+
+    &, *, *:before, *:after
+        box-sizing border-box
+
+    label
+        margin-right 0.5em
+
+    .item
+        display inline-block
+        margin 0.2em
+        background #f0f0f0
+        font-size 0.8em
+        padding 0.3em 0.6em
+        border-radius 99px
+        .cross
+            width 8px
+            height @width
+            vertical-align middle
+            margin-left 4px
+            cursor pointer
+        &.selecting
+            border 1px solid #0A63C2
+
+
+    input
+        flex 1 1 auto
+        background none
+        border none
+        box-shadow none
+        outline none
+
+
+    .dropdown
+
+        margin 2px 0 0 0 // for user-agent ul styles
+
+        background #fff
+        color #333
+
+        border-radius 3px
+        padding (@border-radius - 1px) 0
+
+        cursor default
+
+        list-style none
+
+        z-index 50
+
+        box-shadow 0 3px 9px rgba(0, 0, 0, 0.4)
+
+        &:not(.open)
+            display none
+
+
+    li
+        padding 0.3em 0.5em 0.3em 1.5em
+        border-top 1px solid transparent
+        border-bottom 1px solid transparent
+        white-space nowrap
+        overflow hidden
+        text-overflow ellipsis
+
+        &.selected
+            color #3d96f5
+
+        &:hover, &.selecting
+            background linear-gradient(#3D96F5, #0D7CF2)
+            color #fff
+            border-top-color #0A63C2
+            border-bottom-color #004A99
+
+
+
+#ractive-multiselect-dropdown-container
+    .dropdown
+        position fixed
+        left -9999px

@@ -1,0 +1,123 @@
+
+
+<html>
+    <head>
+        <title>Ractive-multiselect Demo</title>
+
+        <meta charset="utf-8">
+
+        <script src='http://cdn.ractivejs.org/edge/ractive.min.js'></script>
+        <link rel='stylesheet' href='css/styles.css'/>
+
+    </head>
+
+    <body>
+
+
+        <demo></demo>
+
+        <script src='../ractive-multiselect.min.js'></script>
+
+        <script id='template' type='text/ractive'>
+
+        <h1>Ractive multiselect</h1>
+
+        <section>
+
+            <h2>Basic usage</h2>
+
+            <p>By binding <code>ractive-multiselect</code> to <code>multiselect</code>, you can use <code>&lt;multiselect&gt;</code> tags like normal.</p>
+
+            <p>In your ractive instance:</p>
+
+        <pre>
+            <code>
+    new Ractive({
+        ...
+        components: {
+            multiselect: require('ractive-multiselect')
+        },
+        ...
+    });
+            </code>
+        </pre>
+        <p>In your template:</p>
+        <pre>
+            <code>
+    &lt;multiselect&gt;
+        &lt;option&gt;Apple&lt;/option&gt;
+        &lt;option&gt;Banana&lt;/option&gt;
+        &lt;option&gt;Orange&lt;/option&gt;
+    &lt;/multiselect&gt;
+            </code>
+        </pre>
+
+
+        <div style='margin-top:2em'>
+
+            Result:
+
+            <multiselect>
+                <option>Apple</option>
+                <option>Banana</option>
+                <option>Orange</option>
+            </multiselect>
+        </div>
+
+        </section>
+
+        <section>
+            <h2>Styling</h2>
+            <code>ractive-multiselect</code> provides minimal styling, so it can easily be themed as needed
+
+            <div class='dark well'>
+                <multiselect class='dark'>
+                    <option>Dark Style</option>
+                    <option>Banana</option>
+                    <option>Orange</option>
+                </multiselect>
+            </div>
+
+            <div class='light'>
+                <multiselect>
+                    <option>Another example</option>
+                    <option>Banana</option>
+                    <option>Orange</option>
+                </multiselect>
+            </div>
+
+        </section>
+
+        </script>
+
+        <script>
+
+            var main = new Ractive({
+
+                el: 'demo',
+
+                template: '#template',
+
+                data: {
+                    data: [],
+                    perpage: 30,
+                },
+
+                components: {
+                    multiselect:  RactiveMultiselect // don't do globals, kids
+                    //multiselect: require('ractive-multiselect') // use a buildsystem
+                },
+
+                oncomplete: function() {
+                    //debug stuff. Don't do this in production, kids
+                    window.s = this.findComponent('multiselect');
+                }
+
+            })
+
+        </script>
+
+    </body>
+
+</html>
+

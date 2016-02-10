@@ -1,0 +1,39 @@
+<div class='ractive-multiselect {{class}}'
+     style='{{style}}'>
+
+     {{#each selected}}
+        <span class='item {{#if ~/highlightedSelected == @index}}selecting{{/if}}'>
+
+             {{> _selectedItem}}
+
+            {{#if showCross}}
+            <svg class='cross' on-click='select(this)' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+                <path d="M8.432 6l3.442-3.442a.433.433 0 0 0 0-.61L10.05.126a.43.43 0 0 0-.607 0L6 3.568 2.557.125a.432.432 0 0 0-.608 0L.124 1.95a.433.433 0 0 0 0 .608L3.568 6 .126 9.442a.432.432 0 0 0 0 .608l1.824 1.825c.167.166.44.166.608 0L6 8.432l3.442 3.443c.167.166.44.166.608 0l1.824-1.825a.432.432 0 0 0 0-.608L8.432 6z"/>
+            </svg>
+            {{/if}}
+
+        </span>
+     {{/each}}
+
+    <input type='text' value='{{.filter}}'
+           placeholder='{{placeholder || "Select an item..."}}'
+           on-focus='open()'
+           on-uparrow='uparrow'
+           on-downarrow='downarrow'
+           on-leftarrow='leftarrow'
+           on-rightarrow='rightarrow'
+           on-enter='enter'
+           on-backspace-delete='delete'
+           >
+
+    <ul class='dropdown{{#if items && items.length && open}} open{{/if}} {{class}}'>
+        {{#each items}}
+        <li class='{{#if ~/highlighted == @index}}selecting{{/if}}
+                   {{#if ~/selected.indexOf(this) >-1}}selected{{/if}}'
+                   on-click='select(event)'>
+            {{> _item}}
+        </li>
+        {{/each}}
+    </ul>
+
+</div>
