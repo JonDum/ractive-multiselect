@@ -1,7 +1,7 @@
 {
   "name": "ractive-multiselect",
-  "version": "0.4.4",
-  "description": "A `<multiselect>` replacement for ractive",
+  "version": "0.1.0",
+  "description": "A multiselect/tag component for ractive",
   "main": "src/ractive-multiselect.js",
   "repository": "https://github.com/jondum/ractive-multiselect",
   "keywords": [

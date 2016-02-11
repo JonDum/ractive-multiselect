@@ -71,7 +71,7 @@ Customize how rows in the dropdown and selected items are displayed through inli
 
 `allowCustom` Allows custom items to be entered if no matches from `data`. Default: `true`
 
-
+`clearFilterOnSelect` Clears whatever is typed into the filter input when a selection is made. Default `true`
 
 
 

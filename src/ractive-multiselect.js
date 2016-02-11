@@ -20,6 +20,8 @@ module.exports = Ractive.extend({
 
             blockScrolling: true,
 
+            clearFilterOnSelect: true,
+
             /* close on select */
             autoClose: false,
 
@@ -315,6 +317,9 @@ module.exports = Ractive.extend({
             self.splice('selected', index, 1);
 
         }
+
+        if(self.get('clearFilterOnSelect'))
+            self.set('filter', '');
 
         if(self.get('autoClose'))
             self.close();
