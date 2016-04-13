@@ -36,7 +36,7 @@ module.exports = Ractive.extend({
             // show the X in selected items?
             showCross: true,
 
-            // 
+            // Allows custom items to be entered if no matches from `data`. Default: `true`
             allowCustom: true
 
         }
@@ -231,7 +231,8 @@ module.exports = Ractive.extend({
                         self.set('highlighted', -1);
                     }
                 } else {
-                    if(filter.length > 1)
+                    var allowCustom = self.get('allowCustom');
+                    if(filter.length > 1 && allowCustom)
                         self.select(filter);
                 }
 
