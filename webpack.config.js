@@ -6,7 +6,7 @@ module.exports = {
     production: true,
     output: {
         path: __dirname + '/',
-        filename: 'ractive-multiselect.min.js',
+        filename: 'ractive-multiselect.js',
         library: 'RactiveMultiselect',
         libraryTarget: 'umd'
     },
@@ -16,11 +16,6 @@ module.exports = {
         extensions: ['', '.js', '.styl', '.html'],
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
     ],
     module: {
         loaders: [
