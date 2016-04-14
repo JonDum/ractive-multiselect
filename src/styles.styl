@@ -73,6 +73,19 @@
         white-space nowrap
         overflow hidden
         text-overflow ellipsis
+        &.group
+            background #f0f0f0
+            color #aaa
+            text-align center
+            padding 0.4em 0
+            text-transform uppercase
+            font-size 0.8em
+            letter-spacing 1px
+            &:hover, &.selecting
+                background @background
+                color @color
+                border-top-color transparent
+                border-bottom-color transparent
 
         &.selected
             color #3d96f5

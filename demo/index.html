@@ -75,6 +75,54 @@
 
         </section>
 
+
+        <section style='padding-bottom: 12em'>
+            <h2>Grouping</h2>
+
+            <p><code>ractive-multiselect</code> allows items to be grouped.</p>
+
+            <div>
+                <multiselect data='{{food}}'>
+                    {{#partial item}}
+                        {{this.name}}
+                    {{/partial}}
+                    {{#partial selectedItem}}
+                        {{this.name}}
+                    {{/partial}}
+                </multiselect>
+            </div>
+
+            <p>In this mode, your data items will be objects with a <code>group</code> key:</p>
+            <pre><code>
+    food: [
+        {name: 'Zuchini', group: 'vegetables'},
+        {name: 'Potatoes', group: 'vegetables'},
+        {name: 'Oranges', group: 'fruits'},
+        {name: 'Carrots', group: 'vegetables'},
+        {name: 'Apples', group: 'fruits'},
+        {name: 'Fruity Pebbles', group: 'cereals'},
+        {name: 'Bananas', group: 'fruits'},
+        {name: 'Broccoli', group: 'vegetables'},
+        {name: 'Peaches', group: 'fruits'},
+        {name: 'Cheerios', group: 'cereals'},
+    ],
+            <code></pre>
+
+            <p>You will likely need custom partials to handle the groups</p>
+            <pre><code>
+    &lt;multiselect data='\{{food}}'&gt;
+        \{{#partial item}}
+            \{{this.name}}
+        \{{/partial}}
+        \{{#partial selectedItem}}
+            \{{this.name}}
+        \{{/partial}}
+    &lt;/multiselect&gt;
+            <code></pre>
+
+        </section>
+
+
         </script>
 
         <script>
@@ -87,6 +135,21 @@
 
                 data: {
                     fruits: ['Apples', 'Banana', 'Oranges', 'Peaches', 'Fruity Pebbles'],
+
+                    food: [
+                        {name: 'Zuchini', group: 'vegetables'},
+                        {name: 'Potatoes', group: 'vegetables'},
+                        {name: 'Oranges', group: 'fruits'},
+                        {name: 'Carrots', group: 'vegetables'},
+                        {name: 'Apples', group: 'fruits'},
+                        {name: 'Fruity Pebbles', group: 'cereals'},
+                        {name: 'Bananas', group: 'fruits'},
+                        {name: 'Broccoli', group: 'vegetables'},
+                        {name: 'Peaches', group: 'fruits'},
+                        {name: 'Cheerios', group: 'cereals'},
+                    ],
+
+                    users: [ ]
                 },
 
                 components: {

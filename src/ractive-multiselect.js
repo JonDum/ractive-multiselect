@@ -12,6 +12,7 @@ module.exports = Ractive.extend({
     template: require('./template.html'),
 
     isolated: true,
+    modifyArrays: false,
 
     data: function() {
         return {
@@ -63,11 +64,10 @@ module.exports = Ractive.extend({
             var selected = self.get('selected');
             var consume = self.get('consume');
 
-            if(!items)
-                return items;
+            if(!items || !(items instanceof Array))
+                return null;
 
-            return items
-            .filter(function(item) {
+            items = items.slice().filter(function(item) {
 
                 // filter out the selected items
                 if(consume && selected.indexOf(item) > -1)
@@ -76,13 +76,49 @@ module.exports = Ractive.extend({
                 // filter out items that don't match `filter`
                 if(typeof item === 'object') {
                     for(var key in item) {
-                        if(item[key].toLowerCase().indexOf(filter) >-1)
+                        if(typeof item[key] === 'string' && item[key].toLowerCase().indexOf(filter) >-1)
                             return true;
                     }
                 } else {
                     return item.toLowerCase().indexOf(filter) > -1
                 }
             });
+
+
+            var groups = {}, order = [];
+
+            for(var i = 0; i < items.length; i++) {
+
+                var item = items[i];
+
+                // no group
+                if(!item.group) {
+                    continue;
+                }
+
+                // already have a group, add it
+                if(groups[item.group]) {
+                    groups[item.group].push(item);
+                } else {
+                    // no group yet, make a new one
+                    groups[item.group] = [item];
+                    order.push(item.group);
+                }
+
+                //remove from items
+                items.splice(i, 1);
+                i--;
+            }
+
+            // now concat the groups back in
+            if(order.length) {
+                order.forEach(function(group) {
+                    items = items.concat({title: group, group: true});
+                    items = items.concat(groups[group]);
+                });
+            }
+
+            return items;
 
         }
     },
@@ -102,6 +138,14 @@ module.exports = Ractive.extend({
                 return this.partials.item;
             else
                 return this.partials.item_default;
+        },
+
+        group_default: require('./partials/group'),
+        _group: function() {
+            if(this.partials.group)
+                return this.partials.group;
+            else
+                return this.partials.group_default;
         },
     },
 
@@ -308,6 +352,9 @@ module.exports = Ractive.extend({
         var items = self.get('items');
 
         var index = selected.indexOf(item);
+
+        if(item.group === true)
+            return;
 
         if(index == -1) {
 

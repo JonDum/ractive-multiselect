@@ -30,9 +30,14 @@
         {{#each items}}
         <li class='{{#if ~/highlighted == @index}}selecting{{/if}}
                    {{#if ~/selected.indexOf(this) >-1}}selected{{/if}}'
+                   {{#if this.group === true}} group{{/if}}'
                    on-click='select(event)'>
-            {{> _item}}
         </li>
+            {{#if this.group === true}}
+                {{> _group}}
+            {{else}}
+                {{> _item}}
+            {{/if}}
         {{/each}}
     </ul>
 
