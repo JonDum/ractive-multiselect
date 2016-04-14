@@ -73,10 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    data: function() {
 	        return {
 
-
 	            selected: [],
-
-	            blockScrolling: true,
 
 	            clearFilterOnSelect: true,
 
