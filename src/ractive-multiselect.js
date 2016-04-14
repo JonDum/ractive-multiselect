@@ -233,7 +233,13 @@ module.exports = Ractive.extend({
                 if(highlighted <= 0)
                     return;
 
-                highlighted = Math.max(0, highlighted-1);
+                // increase highlighted until we find a non group
+                do {
+                    highlighted--;
+                } while(items[highlighted] &&
+                        items[highlighted].group === true)
+
+                highlighted = Math.max(0, highlighted);
 
                 self.set('highlighted', highlighted);
 
@@ -241,7 +247,12 @@ module.exports = Ractive.extend({
             else
             if(type == 'downarrow') {
 
-                highlighted = Math.min(items.length, highlighted+1);
+                do {
+                    highlighted++;
+                } while(items[highlighted] &&
+                        items[highlighted].group === true)
+
+                highlighted = Math.min(items.length, highlighted);
 
                 self.set('highlighted', highlighted);
 
