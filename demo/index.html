@@ -6,8 +6,9 @@
 
         <meta charset="utf-8">
 
-        <!--<script src='http://cdn.ractivejs.org/latest/ractive.min.js'></script>-->
-        <script src='http://cdn.ractivejs.org/edge/ractive.min.js'></script>
+        <script src='http://cdn.ractivejs.org/latest/ractive.min.js'></script>
+        <!--<script src='http://cdn.ractivejs.org/edge/ractive.min.js'></script>-->
+
         <link rel='stylesheet' href='css/styles.css'/>
 
     </head>
@@ -17,7 +18,7 @@
 
         <demo></demo>
 
-        <script src='../ractive-multiselect.min.js'></script>
+        <script src='../ractive-multiselect.js'></script>
 
         <script id='template' type='text/ractive'>
 
@@ -56,7 +57,7 @@
 
         <div style='margin-top:2em'>
 
-            Result:
+            <p>Result:</p>
 
             <multiselect data='{{fruits}}'>
             </multiselect>
@@ -66,15 +67,44 @@
 
         <section>
             <h2>Styling</h2>
-            <code>ractive-multiselect</code> provides minimal styling, so it can easily be themed as needed
+
+            <p><code>ractive-multiselect</code> provides minimal styling, so it can easily be themed as needed</p>
 
             <div class='dark well'>
                 <multiselect class='dark' data='{{fruits}}'>
                 </multiselect>
             </div>
 
+
+
         </section>
 
+        <section>
+            <h2>Custom Renderers / Partials</h2>
+
+            <p>You can also provide custom renderers to customize how each item appears or display additional information</p>
+
+            <multiselect class='users' data='{{users}}'>
+                {{#partial item}}
+                    <img src='{{picture.thumbnail}}'/>{{this.name.first}} {{this.name.last}}
+
+                {{/partial}}
+                {{#partial selectedItem}}
+                    <img src='{{picture.thumbnail}}'/>{{this.name.first}}
+                {{/partial}}
+            </multiselect>
+            <pre><code>
+    &lt;multiselect class='users' data='\{{users}}'&gt;
+        \{{#partial item}}
+            &lt;img src='\{{picture.thumbnail}}'/&gt;\{{this.name.first}} \{{this.name.last}}
+
+        \{{/partial}}
+        \{{#partial selectedItem}}
+            &lt;img src='\{{picture.thumbnail}}'/&gt;\{{this.name.first}}
+        \{{/partial}}
+    &lt;/multiselect&gt;
+            </code></pre>
+        </section>
 
         <section style='padding-bottom: 12em'>
             <h2>Grouping</h2>
@@ -157,8 +187,19 @@
                     //multiselect: require('ractive-multiselect') // use a buildsystem
                 },
 
+                onconfig: function() {
+
+                    var self = this;
+                    var req = new XMLHttpRequest();
+                    req.addEventListener("load", function() {
+                        self.set('users', JSON.parse(req.responseText).results);
+                    });
+                    req.open("GET", "https://randomuser.me/api?results=30");
+                    req.send();
+                },
+
                 oncomplete: function() {
-                    //debug stuff. Don't do this in production, kids
+                    //debug stuff
                     window.s = this.findComponent('multiselect');
                 }
 

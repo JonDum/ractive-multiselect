@@ -19,7 +19,7 @@ section + section {
   background: #1a1a1a;
   color: #ccc;
   padding: 3em;
-  margin: 1em;
+  margin: 1em 0;
 }
 .dark.well .ractive-multiselect {
   border: 1px solid #555;
@@ -56,4 +56,23 @@ section + section {
 }
 .light .ractive-multiselect:hover {
   border-color: #bbb;
+}
+.users {
+  width: 400px;
+  min-height: 45px;
+}
+.users input {
+  min-height: 3em;
+}
+.users li,
+.users .item {
+  text-transform: capitalize;
+}
+.users li img,
+.users .item img {
+  vertical-align: middle;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
 }
