@@ -26,18 +26,18 @@
            on-backspace-delete='delete'
            >
 
-    <ul class='dropdown{{#if items && items.length && open}} open{{/if}} {{class}}'>
+    <ul class='dropdown{{#if items && items.length && open}} open{{/if}} {{class}}' decorator='preventOverscroll'>
         {{#each items}}
         <li class='{{#if ~/highlighted == @index}}selecting{{/if}}
-                   {{#if ~/selected.indexOf(this) >-1}}selected{{/if}}'
-                   {{#if this.group === true}} group{{/if}}'
+                   {{#if ~/selected.indexOf(this) >-1}}selected{{/if}}
+                   {{#if .group === true}} group{{/if}}'
                    on-click='select(event)'>
-        </li>
             {{#if this.group === true}}
                 {{> _group}}
             {{else}}
                 {{> _item}}
             {{/if}}
+        </li>
         {{/each}}
     </ul>
 

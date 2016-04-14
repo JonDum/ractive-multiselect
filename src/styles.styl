@@ -42,32 +42,27 @@
         border none
         box-shadow none
         outline none
+        text-indent 0.5em
 
 
     .dropdown
-
-        margin 2px 0 0 0 // for user-agent ul styles
-
+        margin 3px 0 0 0 // for user-agent ul styles
         background #fff
         color #333
-
         border-radius 3px
         padding (@border-radius - 1px) 0
-
         cursor default
-
         list-style none
-
         z-index 50
-
         box-shadow 0 3px 9px rgba(0, 0, 0, 0.4)
+        max-height 400px // decent default
+        overflow-y scroll
 
         &:not(.open)
             display none
 
-
     li
-        padding 0.3em 0.5em 0.3em 1.5em
+        padding 0.3em 0.5em
         border-top 1px solid transparent
         border-bottom 1px solid transparent
         white-space nowrap

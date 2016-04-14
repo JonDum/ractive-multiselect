@@ -17,6 +17,7 @@ module.exports = Ractive.extend({
     data: function() {
         return {
 
+
             selected: [],
 
             blockScrolling: true,
@@ -41,6 +42,10 @@ module.exports = Ractive.extend({
             allowCustom: true
 
         }
+    },
+
+    decorators: {
+        preventOverscroll: require('./decorators/prevent-overscroll'),
     },
 
     events: {
@@ -169,6 +174,7 @@ module.exports = Ractive.extend({
 
         container.appendChild(dropdown);
 
+
     },
 
 
@@ -189,29 +195,26 @@ module.exports = Ractive.extend({
 
         };
 
+        self.scrollHandler = function(e) {
+            requestAnimationFrame(function() {
+                self.updateBounds();
+            });
+        };
 
         self.observe('open', function(open) {
-
-            var blockScrolling = self.get('blockScrolling');
-
 
             if(open) {
 
                 doc.addEventListener('click', self.clickHandler);
-
-                if(blockScrolling)
-                    disableScroll();
+                win.addEventListener('scroll', self.scrollHandler);
 
             } else {
 
                 doc.removeEventListener('click', self.clickHandler);
-
-                if(blockScrolling)
-                    enableScroll();
+                win.removeEventListener('scroll', self.scrollHandler);
             }
 
-            self.updateSize();
-            self.updatePosition();
+            self.updateBounds();
 
         });
 
@@ -308,6 +311,7 @@ module.exports = Ractive.extend({
     onteardown: function() {
 
         doc.removeEventListener('click', this.clickHandler);
+        win.removeEventListener('scroll', self.scrollHandler);
 
         // have to manually clean this up since we hoisted it from under ractive's nose
         var dropdown = this.find('.dropdown');
@@ -357,13 +361,10 @@ module.exports = Ractive.extend({
             return;
 
         if(index == -1) {
-
             self.push('selected', item);
 
         } else {
-
             self.splice('selected', index, 1);
-
         }
 
         if(self.get('clearFilterOnSelect'))
@@ -373,25 +374,22 @@ module.exports = Ractive.extend({
             self.close();
 
         self.update('items');
-        self.updateSize();
-        self.updatePosition();
+
+        self.updateBounds();
 
     },
 
-    updateSize: function() {
+    updateBounds: function() {
 
         var self = this;
         var el = self.find('*');
-        self.dropdown.style.width = el.offsetWidth + 'px';
-
-    },
-
-    updatePosition: function() {
-
-        var self = this;
-        var el = self.find('*');
-        var bounds = el.getBoundingClientRect();
         var open = self.get('open');
+
+        var bounds = el.getBoundingClientRect();
+
+        // match dropdown width with el width
+        self.dropdown.style.width = bounds.width + 'px';
+
         var dropdown = self.dropdown;
 
         if (open) {
@@ -400,64 +398,7 @@ module.exports = Ractive.extend({
         } else {
             dropdown.style.left = '-9999px';;
         }
+
     },
 
-
-
-
 });
-
-function showDropdown(element) {
-    var event = doc.createEvent('MouseEvents');
-    event.initMouseEvent('mousedown', true, true, win);
-    element.dispatchEvent(event);
-}
-
-function isTouchDevice() {
-    return ('ontouchstart' in win || 'onmsgesturechange' in win) && screen.width < 1200;
-}
-
-
-// block scrolling - from SO
-
-// left: 37, up: 38, right: 39, down: 40,
-// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-var keys = {
-    37: 1,
-    38: 1,
-    39: 1,
-    40: 1
-};
-
-function preventDefault(e) {
-    e = e || win.event;
-    if (e.preventDefault)
-        e.preventDefault();
-    e.returnValue = false;
-}
-
-function preventDefaultForScrollKeys(e) {
-    if (keys[e.keyCode]) {
-        preventDefault(e);
-        return false;
-    }
-}
-
-function disableScroll() {
-    win.addEventListener('DOMMouseScroll', preventDefault, false);
-    win.addEventListener('wheel', preventDefault); // modern standard
-    win.addEventListener('mousewheel', preventDefault); // older browsers, IE
-    doc.addEventListener('mousewheel', preventDefault);
-    win.addEventListener('touchmove', preventDefault); // mobile
-    doc.addEventListener('keydown', preventDefaultForScrollKeys);
-}
-
-function enableScroll() {
-    win.removeEventListener('DOMMouseScroll', preventDefault, false);
-
-    win.removeEventListener('wheel', preventDefault); // modern standard
-    win.removeEventListener('mousewheel', preventDefault); // older browsers, IE
-    doc.removeEventListener('mousewheel', preventDefault);
-    win.removeEventListener('touchmove', preventDefault); // mobile
-    doc.removeEventListener('keydown', preventDefaultForScrollKeys);
-}
