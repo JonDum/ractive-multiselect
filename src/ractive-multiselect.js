@@ -17,10 +17,7 @@ module.exports = Ractive.extend({
     data: function() {
         return {
 
-
             selected: [],
-
-            blockScrolling: true,
 
             clearFilterOnSelect: true,
 

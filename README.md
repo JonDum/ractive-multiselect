@@ -17,7 +17,7 @@ npm install ractive-multiselect --save
 
 Add the multiselect to your Ractive instance:
 
-```
+```js
 Ractive.extend({
     ...
     components: {
@@ -29,7 +29,7 @@ Ractive.extend({
 
 Use it like a normal multiselect element
 
-```
+```html
 <multiselect value='{{ myValue }}'>
  {{#each options}}
  <option>{{this}}</option>
@@ -42,17 +42,47 @@ Use it like a normal multiselect element
 
 Customize how rows in the dropdown and selected items are displayed through inline partials.
 
-```
-<datatable data='{{data}}' on-edit='dataedited' config='{{config}}' filter='{{filter}}'>
+```html
+<multiselect data='{{data}}'>
     {{#partial selectedItem}}
         {{ .name }}
     {{/partial}}
     {{#partial item}}
-        <img src='{{item.avatar}}'/>
+        <img src='{{.avatar}}'/>
         {{ .name }}
     {{/partial}}
-</datatable>
+</multiselect>
 ```
+
+##### Groups
+
+Data can be grouped
+
+```html
+<multiselect data='{{data}}'>
+    {{#partial selectedItem}}
+        {{ .name }}
+    {{/partial}}
+    {{#partial item}}
+        {{ .name }}
+    {{/partial}}
+</multiselect>
+```
+```js
+data = [
+    {name: 'Zuchini', group: 'vegetables'},
+    {name: 'Potatoes', group: 'vegetables'},
+    {name: 'Oranges', group: 'fruits'},
+    {name: 'Carrots', group: 'vegetables'},
+    {name: 'Apples', group: 'fruits'},
+    {name: 'Fruity Pebbles', group: 'cereals'},
+    {name: 'Bananas', group: 'fruits'},
+    {name: 'Broccoli', group: 'vegetables'},
+    {name: 'Peaches', group: 'fruits'},
+    {name: 'Cheerios', group: 'cereals'},
+]
+```
+
 
 ### API
 
@@ -60,8 +90,6 @@ Customize how rows in the dropdown and selected items are displayed through inli
 `data` Populate the suggestions dropdown. Default `[]`
 
 `selected` Array of selected items from `data`. Default `[]`
-
-`blockScrolling` Blocks page scrolling when the dropdown is open. Default `true`
 
 `autoClose` Close the dropdown upon making a selection. Default `false`
 
