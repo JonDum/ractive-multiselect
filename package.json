@@ -1,6 +1,6 @@
 {
   "name": "ractive-multiselect",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A multiselect/tag component for ractive",
   "main": "src/ractive-multiselect.js",
   "repository": "https://github.com/jondum/ractive-multiselect",
