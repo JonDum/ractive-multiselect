@@ -587,7 +587,8 @@ return /******/ (function(modules) { // webpackBootstrap
 			return document.head || document.getElementsByTagName("head")[0];
 		}),
 		singletonElement = null,
-		singletonCounter = 0;
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
 
 	module.exports = function(list, options) {
 		if(true) {
@@ -598,6 +599,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
 		// tags it will allow on a page
 		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
 
 		var styles = listToStyles(list);
 		addStylesToDom(styles, options);
@@ -665,19 +669,44 @@ return /******/ (function(modules) { // webpackBootstrap
 		return styles;
 	}
 
-	function createStyleElement() {
-		var styleElement = document.createElement("style");
+	function insertStyleElement(options, styleElement) {
 		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
 		styleElement.type = "text/css";
-		head.appendChild(styleElement);
+		insertStyleElement(options, styleElement);
 		return styleElement;
 	}
 
-	function createLinkElement() {
+	function createLinkElement(options) {
 		var linkElement = document.createElement("link");
-		var head = getHeadElement();
 		linkElement.rel = "stylesheet";
-		head.appendChild(linkElement);
+		insertStyleElement(options, linkElement);
 		return linkElement;
 	}
 
@@ -686,7 +715,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		if (options.singleton) {
 			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement());
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
 			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
 			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
 		} else if(obj.sourceMap &&
@@ -695,18 +724,18 @@ return /******/ (function(modules) { // webpackBootstrap
 			typeof URL.revokeObjectURL === "function" &&
 			typeof Blob === "function" &&
 			typeof btoa === "function") {
-			styleElement = createLinkElement();
+			styleElement = createLinkElement(options);
 			update = updateLink.bind(null, styleElement);
 			remove = function() {
-				styleElement.parentNode.removeChild(styleElement);
+				removeStyleElement(styleElement);
 				if(styleElement.href)
 					URL.revokeObjectURL(styleElement.href);
 			};
 		} else {
-			styleElement = createStyleElement();
+			styleElement = createStyleElement(options);
 			update = applyToTag.bind(null, styleElement);
 			remove = function() {
-				styleElement.parentNode.removeChild(styleElement);
+				removeStyleElement(styleElement);
 			};
 		}
 
@@ -752,7 +781,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	function applyToTag(styleElement, obj) {
 		var css = obj.css;
 		var media = obj.media;
-		var sourceMap = obj.sourceMap;
 
 		if(media) {
 			styleElement.setAttribute("media", media)
@@ -770,7 +798,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function updateLink(linkElement, obj) {
 		var css = obj.css;
-		var media = obj.media;
 		var sourceMap = obj.sourceMap;
 
 		if(sourceMap) {
@@ -840,7 +867,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 6 */
 /***/ function(module, exports) {
 
-	module.exports={"v":3,"t":["module.exports={\"v\":3,\"t\":[{\"t\":7,\"e\":\"div\",\"a\":{\"class\":[\"ractive-multiselect \",{\"t\":2,\"r\":\"class\"}],\"style\":[{\"t\":2,\"r\":\"style\"}]},\"f\":[{\"t\":4,\"f\":[{\"t\":7,\"e\":\"span\",\"a\":{\"class\":[\"item \",{\"t\":4,\"f\":[\"selecting\"],\"n\":50,\"x\":{\"r\":[\"~/highlightedSelected\",\"@index\"],\"s\":\"_0==_1\"}}]},\"f\":[{\"t\":8,\"r\":\"_selectedItem\"},\" \",{\"t\":4,\"f\":[{\"t\":7,\"e\":\"svg\",\"a\":{\"class\":\"cross\",\"xmlns\":\"http://www.w3.org/2000/svg\",\"viewBox\":\"0 0 12 12\"},\"v\":{\"click\":{\"m\":\"select\",\"a\":{\"r\":[\".\"],\"s\":\"[_0]\"}}},\"f\":[{\"t\":7,\"e\":\"path\",\"a\":{\"d\":\"M8.432 6l3.442-3.442a.433.433 0 0 0 0-.61L10.05.126a.43.43 0 0 0-.607 0L6 3.568 2.557.125a.432.432 0 0 0-.608 0L.124 1.95a.433.433 0 0 0 0 .608L3.568 6 .126 9.442a.432.432 0 0 0 0 .608l1.824 1.825c.167.166.44.166.608 0L6 8.432l3.442 3.443c.167.166.44.166.608 0l1.824-1.825a.432.432 0 0 0 0-.608L8.432 6z\"}}]}],\"n\":50,\"r\":\"showCross\"}]}],\"n\":52,\"r\":\"selected\"},\" \",{\"t\":7,\"e\":\"input\",\"a\":{\"type\":\"text\",\"value\":[{\"t\":2,\"r\":\".filter\"}],\"placeholder\":[{\"t\":2,\"x\":{\"r\":[\"placeholder\"],\"s\":\"_0||\\\"Select an item...\\\"\"}}]},\"v\":{\"focus\":{\"m\":\"open\",\"a\":{\"r\":[],\"s\":\"[]\"}},\"uparrow\":\"uparrow\",\"downarrow\":\"downarrow\",\"leftarrow\":\"leftarrow\",\"rightarrow\":\"rightarrow\",\"enter\":\"enter\",\"backspace-delete\":\"delete\"}},\" \",{\"t\":7,\"e\":\"ul\",\"a\":{\"class\":[\"dropdown\",{\"t\":4,\"f\":[\" open\"],\"n\":50,\"x\":{\"r\":[\"items\",\"items.length\",\"open\"],\"s\":\"_0&&_1&&_2\"}},\" \",{\"t\":2,\"r\":\"class\"}]},\"o\":\"preventOverscroll\",\"f\":[{\"t\":4,\"f\":[{\"t\":7,\"e\":\"li\",\"a\":{\"class\":[{\"t\":4,\"f\":[\"selecting\"],\"n\":50,\"x\":{\"r\":[\"~/highlighted\",\"@index\"],\"s\":\"_0==_1\"}},\" \",{\"t\":4,\"f\":[\"selected\"],\"n\":50,\"x\":{\"r\":[\"~/selected\",\".\"],\"s\":\"_0.indexOf(_1)>-1\"}},\" \",{\"t\":4,\"f\":[\"group\"],\"n\":50,\"x\":{\"r\":[\".group\"],\"s\":\"_0===true\"}}]},\"v\":{\"click\":{\"m\":\"select\",\"a\":{\"r\":[\"event\"],\"s\":\"[_0]\"}}},\"f\":[{\"t\":4,\"f\":[{\"t\":8,\"r\":\"_group\"}],\"n\":50,\"x\":{\"r\":[\"./group\"],\"s\":\"_0===true\"}},{\"t\":4,\"n\":51,\"f\":[{\"t\":8,\"r\":\"_item\"}],\"x\":{\"r\":[\"./group\"],\"s\":\"_0===true\"}}]}],\"n\":52,\"r\":\"items\"}]}]}]};"]};
+	module.exports={"v":3,"t":[{"t":7,"e":"div","a":{"class":["ractive-multiselect ",{"t":2,"r":"class"}],"style":[{"t":2,"r":"style"}]},"f":[{"t":4,"f":[{"t":7,"e":"span","a":{"class":["item ",{"t":4,"f":["selecting"],"n":50,"x":{"r":["~/highlightedSelected","@index"],"s":"_0==_1"}}]},"f":[{"t":8,"r":"_selectedItem"}," ",{"t":4,"f":[{"t":7,"e":"svg","a":{"class":"cross","xmlns":"http://www.w3.org/2000/svg","viewBox":"0 0 12 12"},"v":{"click":{"m":"select","a":{"r":["."],"s":"[_0]"}}},"f":[{"t":7,"e":"path","a":{"d":"M8.432 6l3.442-3.442a.433.433 0 0 0 0-.61L10.05.126a.43.43 0 0 0-.607 0L6 3.568 2.557.125a.432.432 0 0 0-.608 0L.124 1.95a.433.433 0 0 0 0 .608L3.568 6 .126 9.442a.432.432 0 0 0 0 .608l1.824 1.825c.167.166.44.166.608 0L6 8.432l3.442 3.443c.167.166.44.166.608 0l1.824-1.825a.432.432 0 0 0 0-.608L8.432 6z"}}]}],"n":50,"r":"showCross"}]}],"n":52,"r":"selected"}," ",{"t":7,"e":"input","a":{"type":"text","value":[{"t":2,"r":".filter"}],"placeholder":[{"t":2,"x":{"r":["placeholder"],"s":"_0||\"Select an item...\""}}]},"v":{"focus":{"m":"open","a":{"r":[],"s":"[]"}},"uparrow":"uparrow","downarrow":"downarrow","leftarrow":"leftarrow","rightarrow":"rightarrow","enter":"enter","backspace-delete":"delete"}}," ",{"t":7,"e":"ul","a":{"class":["dropdown",{"t":4,"f":[" open"],"n":50,"x":{"r":["items","items.length","open"],"s":"_0&&_1&&_2"}}," ",{"t":2,"r":"class"}]},"o":"preventOverscroll","f":[{"t":4,"f":[{"t":7,"e":"li","a":{"class":[{"t":4,"f":["selecting"],"n":50,"x":{"r":["~/highlighted","@index"],"s":"_0==_1"}}," ",{"t":4,"f":["selected"],"n":50,"x":{"r":["~/selected","."],"s":"_0.indexOf(_1)>-1"}}," ",{"t":4,"f":["group"],"n":50,"x":{"r":[".group"],"s":"_0===true"}}]},"v":{"click":{"m":"select","a":{"r":["event"],"s":"[_0]"}}},"f":[{"t":4,"f":[{"t":8,"r":"_group"}],"n":50,"x":{"r":["./group"],"s":"_0===true"}},{"t":4,"n":51,"f":[{"t":8,"r":"_item"}],"x":{"r":["./group"],"s":"_0===true"}}]}],"n":52,"r":"items"}]}]}]};
 
 /***/ },
 /* 7 */
@@ -906,19 +933,19 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 8 */
 /***/ function(module, exports) {
 
-	module.exports={"v":3,"t":["module.exports={\"v\":3,\"t\":[{\"t\":2,\"r\":\".\"}]};"]};
+	module.exports={"v":3,"t":[{"t":2,"r":"."}]};
 
 /***/ },
 /* 9 */
 /***/ function(module, exports) {
 
-	module.exports={"v":3,"t":["module.exports={\"v\":3,\"t\":[{\"t\":2,\"r\":\".\"}]};"]};
+	module.exports={"v":3,"t":[{"t":2,"r":"."}]};
 
 /***/ },
 /* 10 */
 /***/ function(module, exports) {
 
-	module.exports={"v":3,"t":["module.exports={\"v\":3,\"t\":[{\"t\":2,\"r\":\"./title\"}]};"]};
+	module.exports={"v":3,"t":[{"t":2,"r":"./title"}]};
 
 /***/ }
 /******/ ])

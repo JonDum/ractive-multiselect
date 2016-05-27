@@ -9,6 +9,7 @@ module.exports = {
         filename: 'ractive-multiselect.js',
         library: 'RactiveMultiselect',
         libraryTarget: 'umd'
+
     },
     resolve: {
         root: process.cwd(),
@@ -20,7 +21,6 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader'},
-            {test: /\.html/, loader: 'ractive-loader'}
         ],
     },
 
