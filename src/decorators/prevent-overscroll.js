@@ -6,6 +6,7 @@ module.exports = function(node, instance) {
 
     node.addEventListener('mouseenter', disableScroll);
     node.addEventListener('mouseleave', enableScroll);
+    node.addEventListener('click', enableScroll);
 
     var contentHeight;
 
