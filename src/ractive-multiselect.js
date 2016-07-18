@@ -298,6 +298,9 @@ module.exports = Ractive.extend({
 
                 var filter = self.get('filter');
 
+                if(filter.length > 0) {
+                    return;
+                }
 
                 if(highlightedSelected !== -1) {
                     self.select(self.get('selected.'+highlightedSelected));
