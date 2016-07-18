@@ -314,6 +314,12 @@ module.exports = Ractive.extend({
 
         });
 
+        //forward common input events
+        self.on('keydown keyup keypress input', function(details) {
+            var event = details.original;
+            self.fire(event.type);
+        });
+
     },
 
     onteardown: function() {
