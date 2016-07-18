@@ -354,6 +354,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	                var filter = self.get('filter');
 
+	                if(filter.length > 0) {
+	                    return;
+	                }
 
 	                if(highlightedSelected !== -1) {
 	                    self.select(self.get('selected.'+highlightedSelected));
@@ -368,6 +371,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            }
 
+	        });
+
+	        //forward common input events
+	        self.on('keydown keyup keypress input', function(details) {
+	            var event = details.original;
+	            self.fire(event.type);
 	        });
 
 	    },
@@ -881,6 +890,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    node.addEventListener('mouseenter', disableScroll);
 	    node.addEventListener('mouseleave', enableScroll);
+	    node.addEventListener('click', enableScroll);
 
 	    var contentHeight;
 
