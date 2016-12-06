@@ -325,13 +325,15 @@ module.exports = Ractive.extend({
 
     },
 
-    onteardown: function() {
+    onunrender: function() {
 
-        doc.removeEventListener('click', this.clickHandler);
+        const self = this;
+
+        doc.removeEventListener('click', self.clickHandler);
         win.removeEventListener('scroll', self.scrollHandler);
 
         // have to manually clean this up since we hoisted it from under ractive's nose
-        var dropdown = this.find('.dropdown');
+        var dropdown = self.find('.dropdown');
 
         if(dropdown) {
             dropdown.parentNode.removeChild(dropdown);
