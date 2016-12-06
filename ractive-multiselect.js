@@ -381,13 +381,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    },
 
-	    onteardown: function() {
+	    onunrender: function() {
 
-	        doc.removeEventListener('click', this.clickHandler);
+	        const self = this;
+
+	        doc.removeEventListener('click', self.clickHandler);
 	        win.removeEventListener('scroll', self.scrollHandler);
 
 	        // have to manually clean this up since we hoisted it from under ractive's nose
-	        var dropdown = this.find('.dropdown');
+	        var dropdown = self.find('.dropdown');
 
 	        if(dropdown) {
 	            dropdown.parentNode.removeChild(dropdown);
@@ -876,7 +878,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 6 */
 /***/ function(module, exports) {
 
-	module.exports={"v":3,"t":[{"t":7,"e":"div","a":{"class":["ractive-multiselect ",{"t":2,"r":"class"}],"style":[{"t":2,"r":"style"}]},"f":[{"t":4,"f":[{"t":7,"e":"span","a":{"class":["item ",{"t":4,"f":["selecting"],"n":50,"x":{"r":["~/highlightedSelected","@index"],"s":"_0==_1"}}]},"f":[{"t":8,"r":"_selectedItem"}," ",{"t":4,"f":[{"t":7,"e":"svg","a":{"class":"cross","xmlns":"http://www.w3.org/2000/svg","viewBox":"0 0 12 12"},"v":{"click":{"m":"select","a":{"r":["."],"s":"[_0]"}}},"f":[{"t":7,"e":"path","a":{"d":"M8.432 6l3.442-3.442a.433.433 0 0 0 0-.61L10.05.126a.43.43 0 0 0-.607 0L6 3.568 2.557.125a.432.432 0 0 0-.608 0L.124 1.95a.433.433 0 0 0 0 .608L3.568 6 .126 9.442a.432.432 0 0 0 0 .608l1.824 1.825c.167.166.44.166.608 0L6 8.432l3.442 3.443c.167.166.44.166.608 0l1.824-1.825a.432.432 0 0 0 0-.608L8.432 6z"}}]}],"n":50,"r":"showCross"}]}],"n":52,"r":"selected"}," ",{"t":7,"e":"input","a":{"type":"text","value":[{"t":2,"r":".filter"}],"placeholder":[{"t":2,"x":{"r":["placeholder"],"s":"_0||\"Select an item...\""}}]},"v":{"focus":{"m":"open","a":{"r":[],"s":"[]"}},"uparrow":"uparrow","downarrow":"downarrow","leftarrow":"leftarrow","rightarrow":"rightarrow","enter":"enter","input":"input","keyup":"keyup","keydown":"keydown","keypress":"keypress","backspace-delete":"delete"}}," ",{"t":7,"e":"ul","a":{"class":["dropdown",{"t":4,"f":[" open"],"n":50,"x":{"r":["items","items.length","open"],"s":"_0&&_1&&_2"}}," ",{"t":2,"r":"class"}]},"o":"preventOverscroll","f":[{"t":4,"f":[{"t":7,"e":"li","a":{"class":[{"t":4,"f":["selecting"],"n":50,"x":{"r":["~/highlighted","@index"],"s":"_0==_1"}}," ",{"t":4,"f":["selected"],"n":50,"x":{"r":["~/selected","."],"s":"_0.indexOf(_1)>-1"}}," ",{"t":4,"f":["group"],"n":50,"x":{"r":[".group"],"s":"_0===true"}}]},"v":{"click":{"m":"select","a":{"r":["event"],"s":"[_0]"}}},"f":[{"t":4,"f":[{"t":8,"r":"_group"}],"n":50,"x":{"r":["./group"],"s":"_0===true"}},{"t":4,"n":51,"f":[{"t":8,"r":"_item"}],"x":{"r":["./group"],"s":"_0===true"}}]}],"n":52,"r":"items"}]}]}]};
+	module.exports={"v":4,"t":[{"t":7,"e":"div","m":[{"n":"class","f":["ractive-multiselect ",{"t":2,"r":"class"}],"t":13},{"n":"style","f":[{"t":2,"r":"style"}],"t":13}],"f":[{"t":4,"f":[{"t":7,"e":"span","m":[{"n":"class","f":["item ",{"t":4,"f":["selecting"],"n":50,"x":{"r":["~/highlightedSelected","@index"],"s":"_0==_1"}}],"t":13}],"f":[{"t":8,"r":"_selectedItem"}," ",{"t":4,"f":[{"t":7,"e":"svg","m":[{"n":"class","f":"cross","t":13},{"n":"click","f":{"x":{"r":["@this","."],"s":"[_0.select(_1)]"}},"t":70},{"n":"xmlns","f":"http://www.w3.org/2000/svg","t":13},{"n":"viewBox","f":"0 0 12 12","t":13}],"f":[{"t":7,"e":"path","m":[{"n":"d","f":"M8.432 6l3.442-3.442a.433.433 0 0 0 0-.61L10.05.126a.43.43 0 0 0-.607 0L6 3.568 2.557.125a.432.432 0 0 0-.608 0L.124 1.95a.433.433 0 0 0 0 .608L3.568 6 .126 9.442a.432.432 0 0 0 0 .608l1.824 1.825c.167.166.44.166.608 0L6 8.432l3.442 3.443c.167.166.44.166.608 0l1.824-1.825a.432.432 0 0 0 0-.608L8.432 6z","t":13}]}]}],"n":50,"r":"showCross"}]}],"n":52,"r":"selected"}," ",{"t":7,"e":"input","m":[{"n":"type","f":"text","t":13},{"n":"value","f":[{"t":2,"r":".filter"}],"t":13},{"n":"placeholder","f":[{"t":2,"x":{"r":["placeholder"],"s":"_0||\"Select an item...\""}}],"t":13},{"n":"focus","f":{"x":{"r":["@this"],"s":"[_0.open()]"}},"t":70},{"n":"uparrow","f":"uparrow","t":70},{"n":"downarrow","f":"downarrow","t":70},{"n":"leftarrow","f":"leftarrow","t":70},{"n":"rightarrow","f":"rightarrow","t":70},{"n":"enter","f":"enter","t":70},{"n":"input","f":"input","t":70},{"n":"keyup","f":"keyup","t":70},{"n":"keydown","f":"keydown","t":70},{"n":"keypress","f":"keypress","t":70},{"n":"backspace-delete","f":"delete","t":70}]}," ",{"t":7,"e":"ul","m":[{"n":"class","f":["dropdown",{"t":4,"f":[" open"],"n":50,"x":{"r":["items","items.length","open"],"s":"_0&&_1&&_2"}}," ",{"t":2,"r":"class"}],"t":13},{"f":"preventOverscroll","t":71}],"f":[{"t":4,"f":[{"t":7,"e":"li","m":[{"n":"class","f":[{"t":4,"f":["selecting"],"n":50,"x":{"r":["~/highlighted","@index"],"s":"_0==_1"}}," ",{"t":4,"f":["selected"],"n":50,"x":{"r":["~/selected","."],"s":"_0.indexOf(_1)>-1"}}," ",{"t":4,"f":["group"],"n":50,"x":{"r":[".group"],"s":"_0===true"}}],"t":13},{"n":"click","f":{"x":{"r":["@this","event"],"s":"[_0.select(_1)]"}},"t":70}],"f":[{"t":4,"f":[{"t":8,"r":"_group"}],"n":50,"x":{"r":["./group"],"s":"_0===true"}},{"t":4,"n":51,"f":[{"t":8,"r":"_item"}],"l":1}]}],"n":52,"r":"items"}]}]}],"e":{}};
 
 /***/ },
 /* 7 */
@@ -943,19 +945,19 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 8 */
 /***/ function(module, exports) {
 
-	module.exports={"v":3,"t":[{"t":2,"r":"."}]};
+	module.exports={"v":4,"t":[{"t":2,"r":"."}]};
 
 /***/ },
 /* 9 */
 /***/ function(module, exports) {
 
-	module.exports={"v":3,"t":[{"t":2,"r":"."}]};
+	module.exports={"v":4,"t":[{"t":2,"r":"."}]};
 
 /***/ },
 /* 10 */
 /***/ function(module, exports) {
 
-	module.exports={"v":3,"t":[{"t":2,"r":"./title"}]};
+	module.exports={"v":4,"t":[{"t":2,"r":"./title"}]};
 
 /***/ }
 /******/ ])
