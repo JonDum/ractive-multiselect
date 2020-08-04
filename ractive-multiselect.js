@@ -52,7 +52,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
 
@@ -479,9 +479,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
@@ -495,8 +495,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/stylus-loader/index.js!./styles.styl", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/stylus-loader/index.js!./styles.styl");
+			module.hot.accept("!!../node_modules/css-loader/index.js!../node_modules/stylus-loader/index.js!./styles.styl", function() {
+				var newContent = require("!!../node_modules/css-loader/index.js!../node_modules/stylus-loader/index.js!./styles.styl");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -505,9 +505,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		module.hot.dispose(function() { update(); });
 	}
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
 	// imports
@@ -519,9 +519,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	// exports
 
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/*
 		MIT License http://www.opensource.org/licenses/mit-license.php
@@ -575,9 +575,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/*
 		MIT License http://www.opensource.org/licenses/mit-license.php
@@ -592,7 +592,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			};
 		},
 		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+			return /msie [6-9]\b/.test(self.navigator.userAgent.toLowerCase());
 		}),
 		getHeadElement = memoize(function () {
 			return document.head || document.getElementsByTagName("head")[0];
@@ -827,9 +827,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// TODO can we just declare the keydowhHandler once? using `this`?
 	function makeKeyDefinition(code) {
@@ -874,15 +874,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports={"v":4,"t":[{"t":7,"e":"div","m":[{"n":"class","f":["ractive-multiselect ",{"t":2,"r":"class"}],"t":13},{"n":"style","f":[{"t":2,"r":"style"}],"t":13}],"f":[{"t":4,"f":[{"t":7,"e":"span","m":[{"n":"class","f":["item ",{"t":4,"f":["selecting"],"n":50,"x":{"r":["~/highlightedSelected","@index"],"s":"_0==_1"}}],"t":13}],"f":[{"t":8,"r":"_selectedItem"}," ",{"t":4,"f":[{"t":7,"e":"svg","m":[{"n":"class","f":"cross","t":13},{"n":"click","f":{"x":{"r":["@this","."],"s":"[_0.select(_1)]"}},"t":70},{"n":"xmlns","f":"http://www.w3.org/2000/svg","t":13},{"n":"viewBox","f":"0 0 12 12","t":13}],"f":[{"t":7,"e":"path","m":[{"n":"d","f":"M8.432 6l3.442-3.442a.433.433 0 0 0 0-.61L10.05.126a.43.43 0 0 0-.607 0L6 3.568 2.557.125a.432.432 0 0 0-.608 0L.124 1.95a.433.433 0 0 0 0 .608L3.568 6 .126 9.442a.432.432 0 0 0 0 .608l1.824 1.825c.167.166.44.166.608 0L6 8.432l3.442 3.443c.167.166.44.166.608 0l1.824-1.825a.432.432 0 0 0 0-.608L8.432 6z","t":13}]}]}],"n":50,"r":"showCross"}]}],"n":52,"r":"selected"}," ",{"t":7,"e":"input","m":[{"n":"type","f":"text","t":13},{"n":"value","f":[{"t":2,"r":".filter"}],"t":13},{"n":"placeholder","f":[{"t":2,"x":{"r":["placeholder"],"s":"_0||\"Select an item...\""}}],"t":13},{"n":"focus","f":{"x":{"r":["@this"],"s":"[_0.open()]"}},"t":70},{"n":"uparrow","f":"uparrow","t":70},{"n":"downarrow","f":"downarrow","t":70},{"n":"leftarrow","f":"leftarrow","t":70},{"n":"rightarrow","f":"rightarrow","t":70},{"n":"enter","f":"enter","t":70},{"n":"input","f":"input","t":70},{"n":"keyup","f":"keyup","t":70},{"n":"keydown","f":"keydown","t":70},{"n":"keypress","f":"keypress","t":70},{"n":"backspace-delete","f":"delete","t":70}]}," ",{"t":7,"e":"ul","m":[{"n":"class","f":["dropdown",{"t":4,"f":[" open"],"n":50,"x":{"r":["items","items.length","open"],"s":"_0&&_1&&_2"}}," ",{"t":2,"r":"class"}],"t":13},{"f":"preventOverscroll","t":71}],"f":[{"t":4,"f":[{"t":7,"e":"li","m":[{"n":"class","f":[{"t":4,"f":["selecting"],"n":50,"x":{"r":["~/highlighted","@index"],"s":"_0==_1"}}," ",{"t":4,"f":["selected"],"n":50,"x":{"r":["~/selected","."],"s":"_0.indexOf(_1)>-1"}}," ",{"t":4,"f":["group"],"n":50,"x":{"r":[".group"],"s":"_0===true"}}],"t":13},{"n":"click","f":{"x":{"r":["@this","event"],"s":"[_0.select(_1)]"}},"t":70}],"f":[{"t":4,"f":[{"t":8,"r":"_group"}],"n":50,"x":{"r":["./group"],"s":"_0===true"}},{"t":4,"n":51,"f":[{"t":8,"r":"_item"}],"l":1}]}],"n":52,"r":"items"}]}]}],"e":{}};
 
-/***/ },
+/***/ }),
 /* 7 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	
 	var win = window;
@@ -941,25 +941,25 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 
-/***/ },
+/***/ }),
 /* 8 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports={"v":4,"t":[{"t":2,"r":"."}]};
 
-/***/ },
+/***/ }),
 /* 9 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports={"v":4,"t":[{"t":2,"r":"."}]};
 
-/***/ },
+/***/ }),
 /* 10 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports={"v":4,"t":[{"t":2,"r":"./title"}]};
 
-/***/ }
+/***/ })
 /******/ ])
 });
 ;

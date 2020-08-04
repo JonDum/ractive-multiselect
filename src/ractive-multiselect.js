@@ -9,7 +9,7 @@ var id = 'ractive-multiselect-dropdown-container';
 
 module.exports = Ractive.extend({
 
-    template: require('!!ractive!./template.html'),
+    template: require('!!ractive-loader!./template.html'),
 
     isolated: true,
     modifyArrays: false,
@@ -126,7 +126,7 @@ module.exports = Ractive.extend({
     },
 
     partials: {
-        selectedItem_default: require('ractive!./partials/selecteditem.html'),
+        selectedItem_default: require('ractive-loader!./partials/selecteditem.html'),
         _selectedItem: function() {
             if(this.partials.selectedItem)
                 return this.partials.selectedItem;
@@ -134,7 +134,7 @@ module.exports = Ractive.extend({
                 return this.partials.selectedItem_default;
         },
 
-        item_default: require('ractive!./partials/item.html'),
+        item_default: require('ractive-loader!./partials/item.html'),
         _item: function() {
             if(this.partials.item)
                 return this.partials.item;
@@ -142,7 +142,7 @@ module.exports = Ractive.extend({
                 return this.partials.item_default;
         },
 
-        group_default: require('ractive!./partials/group.html'),
+        group_default: require('ractive-loader!./partials/group.html'),
         _group: function() {
             if(this.partials.group)
                 return this.partials.group;
